@@ -1,18 +1,21 @@
 import Head from 'next/head';
+import SearchResults from '../components/SearchResults';
 import SearchHeader from '../components/SearchHeader';
 import Response from '../Response';
+import { useRouter } from 'next/router';
 
-export default function search({ results }) {
+export default function Search({ results }) {
+  const router = useRouter();
   console.log(results);
   return (
     <div>
       <Head>
-        <title>Search page</title>
+        <title>Results for {router.query.term}</title>
       </Head>
-
       {/* search header */}
       <SearchHeader />
       {/* search results */}
+      <SearchResults results={results} />
     </div>
   );
 }
