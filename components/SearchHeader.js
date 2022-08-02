@@ -3,10 +3,18 @@ import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { MicrophoneIcon, SearchIcon, XIcon } from '@heroicons/react/solid';
 import User from './User';
+import SearchHeaderOptions from './SearchHeaderOptions';
 
 export default function SearchHeader() {
   const router = useRouter();
   const searchInputRef = useRef(null);
+
+  function search(e) {
+    e.preventDefault();
+    const term = searchInputRef.current.value;
+    if (!term.trim()) return;
+    router.push(`/search?term=${term.trim()}&searchType`);
+  }
   return (
     <header className="sticky top-0 bg-white">
       <div className="flex items-center w-full p-6">
@@ -33,9 +41,11 @@ export default function SearchHeader() {
           />
           <MicrophoneIcon className="hidden h-6 pl-4 mr-3 text-blue-500 border-l-2 border-gray-300 sm:inline-flex" />
           <SearchIcon className="hidden h-6 text-blue-500 sm:inline-flex" />
+          <button type="submit" hidden onClick={search}></button>
         </form>
         <User className="ml-auto whitespace-nowrap" />
       </div>
+      <SearchHeaderOptions />
     </header>
   );
 }
